@@ -54,6 +54,5 @@ nums = [1, 3, 5]
 testClass = NumArray(nums)
 
 print(testClass.sumRange(0, 8))
-testClass.
 # print(testClass.sumRange(2, 5))
 # print(testClass.sumRange(0, 5))
