@@ -3,7 +3,6 @@ class Solution(object):
 		l = s.split()
 		if len(l)==0:
 			return 0
-		print(l)
 		return len(l[-1])
 
 
