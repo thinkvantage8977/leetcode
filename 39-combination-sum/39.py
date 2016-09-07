@@ -1,26 +1,21 @@
 class Solution(object):
 
-    def DFS(self, l, i, current):
-        print(l)
-        if current == self.target:
-            self.result.append(l[:])
+    def DFS(self, l, current, n):
+        if current == 0:
+            self.result.append(l)
             return
 
-        if i == self.n:
-            return
+        for i in range(n, len(self.candidates)):
+            if current - self.candidates[i] < 0:
+                return
 
-        for j in range(i, self.n):
-            if current + self.candidates[j] <= self.target:
-                l.append(self.candidates[j])
-                self.DFS(l, i + 1, current + self.candidates[j])
-                l.pop()
+            self.DFS(l + [self.candidates[i]], current - self.candidates[i], i)
 
     def combinationSum(self, candidates, target):
-        self.n = len(candidates)
         self.result = []
         self.candidates = candidates
-        self.target = target
-        self.DFS([], 0, 0)
+        self.candidates.sort()
+        self.DFS([], target, 0)
         return self.result
 
 testClass = Solution()
