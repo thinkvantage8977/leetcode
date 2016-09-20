@@ -1,18 +1,41 @@
 class Solution(object):
 
+    def twoSum(self, nums, i, j, q):
+        while i < j:
+            if nums[i] + nums[j] + q == 0:
+                self.res.append([q, nums[i], nums[j]])
+                while i < j and nums[i] == nums[i + 1]:
+                    i += 1
+                while i < j and nums[j] == nums[j - 1]:
+                    j -= 1
+                i += 1
+                j -= 1
+            else:
+                if nums[i] + nums[j] + q < 0:
+                    i += 1
+                else:
+                    j -= 1
+
     def threeSum(self, nums):
-        res = []
 
-        for i in range(len(nums)):
-            for j in range(i + 1, len(nums)):
-                for k in range(j + 1, len(nums)):
-                    if nums[i] + nums[j] + nums[k] == 0:
-                        res.append([nums[i], nums[j], nums[k]])
-        return res
+        if len(nums) < 3:
+            return []
 
+        nums.sort()
+        i = 0
+
+        self.res = []
+
+        while i < len(nums) - 2:
+            if i!=0 and nums[i] == nums[i - 1]:
+                i += 1
+                continue
+            q = nums[i]
+            self.twoSum(nums, i + 1, len(nums) - 1, q)
+            i += 1
+
+        return self.res
 
 testClass = Solution()
 
-S = [-1, 0, 1, 2, -1, -4]
-
-print(testClass.threeSum(S))
+print(testClass.threeSum([0, 0, 0]))

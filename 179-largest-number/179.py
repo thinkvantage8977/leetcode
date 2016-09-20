@@ -1,3 +1,4 @@
+#一个比较好的办法，就是干脆两个数进行连接，然后拼接后两个数的大小。
 class Solution:
 
     def merge(self, l1, l2):

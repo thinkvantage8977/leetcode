@@ -1,0 +1,170 @@
+第一轮~ Encode string
+举例："aaaabb" --> "4xa2xb"
+解码规则：pattern是 <数字 + x + 一个字符>，比如"4xab"，解码后是"aaaab".  Follow up 如何test
+def encode(s):
+    if not s:
+        return s
+
+    res = []
+    current = s[0]
+    counter = 0
+
+    s = s + "@"
+    for c in s:
+        if c == current:
+            counter += 1
+
+        else:
+            res.append(str(counter))
+            res.append("x")
+            res.append(current)
+
+            current = c
+            counter = 1
+
+    return "".join(res)
+
+
+def decode(s):
+
+    res = []
+
+    counter = ""
+
+    i = 0
+    while i < len(s):
+        if s[i] in ["1", "2", "3", "4", "5", "6", "7", "8", "9"]:
+            counter += s[i]
+            i += 1
+            continue
+        elif s[i] != "x":
+            return ""
+        i += 1
+        target = s[i]
+        res.append(target * int(counter))
+        i += 1
+        counter = ""
+
+    return "".join(res)
+-Done
+
+第二轮，白人姐姐
+第一题 Next Permutation,  follow up 如何test
+LC 31 Next Permutation
+从后向前找到第一个下角序列 nums[i] < nums[i + 1]
+扎到I之后第一个比I大的J
+交换N[I]与N[J]
+N[I]之后排序
+class Solution(object):
+
+    def nextPermutation(self, nums):
+        if not nums:
+            return nums
+
+        i = len(nums) - 2
+
+        while i > 0:
+            if nums[i] < nums[i + 1]:
+                break
+            else:
+                i -= 1
+
+        if i == 0:
+            return sorted(nums)
+
+        j = len(nums) - 1
+
+        while nums[j] < nums[i]:
+            j -= 1
+
+        nums[i], nums[j] = nums[j], nums[i]
+
+        nums[i + 1:] = sorted(nums[i + 1:])
+
+        return nums
+
+第二题 Rotational Equivalent
+规则："abbd" 和 "cddf" 是等价的（相当于把abbd按照字母表整个右移了两位，a->c, b->d, d->f） 经提醒才注意到 "ab" 和 "za" 等价。
+题目：给一个 list of string，把 rotational equivalent 的放在同一组。私以为是Group Anagram的变种~
+class Solution(object):
+
+    def hash(self, s):
+        d = []
+        for c in s:
+            d.append(ord(c) - 97)
+        distance = 25 - d[0]
+        for i in range(len(d)):
+            d[i] += distance
+            d[i] -= 26 if d[i] > 25 else 0
+
+        res = []
+        for i in d:
+            res.append(chr(i + 97))
+        return "".join(res)
+
+    def groupStrings(self, strs):
+        if not strs:
+            return []
+
+        d = {}
+
+        for s in strs:
+            hashcode = self.hash(s)
+            if hashcode not in d:
+                d[hashcode] = [s]
+            else:
+                d[hashcode].append(s)
+
+        res = []
+        # print(d)
+        for key, value in d.items():
+            res.append(value)
+
+        return res
+
+
+
+第三轮 Decode & Encode 
+先让decode "2[ab]c" -> "ababc"，当然输入可能是多层的比如"2[a3[bc]]d"，似乎是leet原题。
+class Solution(object):
+
+    def decodeString(self, s):
+        if not s:
+            return s
+
+        i = 0
+        res = []
+        counter = ""
+        while i < len(s):
+            if s[i] in "0123456789":
+                counter += s[i]
+                i += 1
+            elif 96 < ord(s[i]) < 123:
+                res.append(s[i])
+                i += 1
+            elif s[i] == "[":
+                matachRight = self.findMatchingRight(i + 1, s)
+                res.append(int(counter) * self.decodeString(s[i + 1:matachRight]))
+                counter = ""
+                i = matachRight + 1
+
+        return "".join(res)
+
+    def findMatchingRight(self, i, s):
+        left = 0
+        while i < len(s):
+            if s[i] == "[":
+                left += 1
+
+            elif s[i] == "]":
+                if left == 0:
+                    return i
+                else:
+                    left -= 1
+            i += 1
+LC394. Decode String
+
+
+第四轮 Subtree
+判断一个binary tree是不是另一个binary tree的子树。
+一开始想复杂了以为要在一个树里找另一个树的pattern，没想到只是个清新脱俗的subtree……

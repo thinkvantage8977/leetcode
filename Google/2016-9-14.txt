@@ -1,0 +1,18 @@
+第一题
+就是lc里面的303，给了一个接口Sum，里面有set和sum两function，还有一个存数据的数据结构。他咸用一个数组来存放数据，然后问我用这个的好处是什么。我说了可以直接用index获取其中的数据，也可以快速获取头和尾，搜索的话如果是顺序的可以用BS来快速搜索。然后他问sum这个function的时间复杂度呢？我说你这里只给了声明，没有implementation，我不知道；他说就一个一个加，我说那worse case就是O(n)。他说好，那如果sum要被经常调用的话O(n)肯定不行，你要怎么弄好。问道这心理暗喜，因为在lc做过了，但是还是平静一下先询问一下条件，比如是用数组寸数据吗，固定长度吗之类之类的。然后确认好就说了当前单元存放之前所有元素之和，他说可以，然后就开始写。因为他给的是一个接口，然后需要自己定义个一数组来存放数据，另外一个来存放加和的sum的数据，然后再写接口里面的函数，写的时候没注意，当前单元格里面的值还包含了苯单元格的值，经他指出来我修改了。然后他问时间复杂度？我说O(1)，他说你再写一下set函数，我就直接对index的单元格里面更新值，然后重新再计算一次加和的sum（后来想想可以不用从头开始算，从更新的index算就行了，不过他也没有说什么）
+- 303	Range Sum Query - Immutable 
+
+第二题
+lc的304，从一维数组审计到二维数组，问我怎么generalize刚才的solution。我想了一下，可以对每一行进行刚才的求和，然后根据坐标求对应行subSum的总和就行了，我就写了一下。写完了他问我求二维的时间复杂度，我说之前求每个单元格之前的部分Sum的这里因为便利了所有元素，所以是O(n), n = row*col，然后说sum坐标范围的时候二了一下，因为他给的例子坐标是只求了两行的，然后我就说是O(1)，然后他说你这个好像不太对，有这么多航。我立马意识到求全部的行当然不是O(1)，立马改成O(row)，他说好。
+
+面试问题基本就是这样，一共40分钟这样。他问我有没有什么问题问他，我就问这些面试题目是在工作中遇到的吗？他笑笑说不是。然后就介绍了一下工作。他说我还做的不错，我心里挺开心，想想碰到的题目不难真是运气好。全称他挺supportive的，但是一直在说比较好的话，不知道最终反馈给HR那边怎么样。所以在地里面发发面经攒人品，求过求Onsite！
+
+
+
+
+
+Raindrop problem:
+struct interv { double left=0, right=0.01; bool isWet() { return left>=right; } }; 就好了，然后生成0,1之间的一个均匀分布，模拟每个雨滴看落到哪个interval里，直 到100个都打湿。 vector sidewalk(100,interv()); int cnt=0, wetCnt=0, idx; while(wetCnt<100) { ++cnt; double p= (double)(rand())/RAND_MAX; double left=p-0.005; double right=p+0.005; if(left>=0) { idx=left/0.01; if(!sidewalk.isWet()) { iright=left-idx*0.01; if (irightsidewalk.left) { sidewalk.left=ileft; if(sidewalk.isWet()) ++wetCnt; } } } }
+
+链接: https://instant.1point3acres.com/thread/163169
+来源: 一亩三分地

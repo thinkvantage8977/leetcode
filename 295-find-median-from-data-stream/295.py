@@ -1,6 +1,8 @@
+# 在Data stream中找到median。这道题是Heap的经典应用，需要同时维护一个最大堆和一个最小堆， 
+# 最大堆和最小堆的size <= 当前数字count / 2。
+# 在学习heap数据结构的时候一般都会讲到这一题，很经典。
+
 import heapq
-
-
 class MedianFinder:
 
     def __init__(self):

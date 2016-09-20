@@ -1,0 +1,3 @@
+dict[c] store the latest index of c
+everytime we found a c that already in dict[c]
+head= max(head,dict[c]+1)

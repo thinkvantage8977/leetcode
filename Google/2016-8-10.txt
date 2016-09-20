@@ -1,0 +1,167 @@
+
+刚刚面完G家，由于已经接了另外一家offer，于是轻松上阵，发个面经回馈地里
+
+电面：Number of Islands II
+
+第一轮：
+1.
+给定下面的interface
+interface Iterator<T> {
+  boolean hasNext();
+  T next();
+}.
+
+interface predicate<T> {
+  boolean apply(T item)
+}
+
+
+要求implement一个filter function如下：
+Iterator<T> filter(Iterator<T> in, predicate<T> pred);
+predicate里的apply就是起到check的作用，比如说T是Integer，然后当一个integer是偶数的时候apply function返回True，否则返回False，那么filter function就是实现一个偶数的iterator
+例如如果不断call next()的话，Iterator<T> in返回的是0,1,2,3,4,5,6,...，那么filter function返回的那个iterator应该能输出0,2,4,6...
+????
+
+2.
+实现一个lock interface
+interface Lock {
+  void acquire();
+  void release();
+}
+Follow up: 实现一个Read Write Lock
+public class ReadWriteLock {
+    interface Mutex {// given an mutex
+        public void lock();
+        public void unlock();
+    }
+    Mutex readLock; // read lock, in order to support PRAM CREW.  it only lock when
+    Mutex writeLock; // write lock. only lock when read perform.
+    int numsOfreadLock = 0;
+
+    public void readlock() {
+        readLock.lock();
+        numsOfreadLock++;
+        if (numsOfreadLock == 1)
+            writeLock.lock();
+        readLock.unlock();  //concurrent read PRAM CREW
+    }
+
+    public void readunlock() {
+        readLock.lock();
+        numsOfreadLock--;
+        if (numsOfreadLock == 0)
+            writeLock.unlock();. Waral 
+        readLock.unlock();   //concurrent read PRAM CREW
+
+    }
+
+    public void writelock() {
+        writeLock.lock();
+    }
+
+    public void writeunlock() {
+        writeLock.unlock();
+    }
+
+}
+
+
+
+第二轮：
+先问了一些list, set, hashmap的基本知识
+给定一串log，包含Process ID, User ID, Start Time, End Time, Memory Usage，要求返回每个User最多用多少memory
+LEETCODE MEETING ROOM
+-DONE
+# Definition for an interval.
+class Interval(object):
+
+    def __init__(self, s=0, e=0, u=0):
+        self.start = s
+        self.end = e
+        self.usage = u
+
+
+class Solution(object):
+
+    def minMeetingRooms(self, intervals):
+
+        l = []
+
+        for i in intervals:
+            l.append((i.start, i.usage, 1))
+            l.append((i.end, i.usage, 2))
+
+        l.sort(key=lambda x: x[0])
+
+        currentUsage = 0
+        maxUsage = -float("inf")
+        for i in l:
+            if i[2] == 1:
+                currentUsage += i[1]
+                maxUsage = max(maxUsage, currentUsage)
+            else:
+                currentUsage -= i[1]
+
+        return maxUsage
+
+
+
+第三轮：
+1.
+Find Nth smallest element in a binary search tree.
+Follow up 1: 能否优化到好于O(n)
+Follow up 2：如何做unit testing，如何比较两个算法的优劣
+
+public class Solution {
+    public int kthSmallest(TreeNode root, int k) {
+        if (root == null) {
+            return 0;
+        }
+         
+        int leftNodes = getNumberNodes(root.left);
+        if(k == leftNodes + 1) {
+            return root.val;
+        } else if (k > leftNodes + 1) {
+            return kthSmallest(root.right, k - leftNodes - 1);
+        } else {
+            return kthSmallest(root.left, k);
+        }
+    }
+     
+    private int getNumberNodes(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+         
+        return getNumberNodes(root.left) + getNumberNodes(root.right) + 1;
+    }
+}
+
+
+2.
+一开始想问一道和Meeting Room II差不多的题，我说第二轮的时候问了很类似的题，他就说那我问你几个follow-up囧
+首先还是那些log，问如果有很多log怎么办
+我说Shared by user ID，他说不行，我要求返回所有user最多可能用多少memory，于是我说那可以根据start time和end time做bucket sort
+?????
+
+第四轮：
+1. Word Pattern的简单版，只要字母和字母互相对应就行，比如$^((*和hello是互相match的.
+
+2. 类似于Candy Crush游戏，在一个棋盘里随机填1,2,3,4，例如：
+121
+314
+124
+玩家每一次可以把两个相邻的数字交换一下，比如如果把最中间的1和3交换一下，那么竖过来三个连续的1就可以被消除，要求随机generate这个棋盘
+
+Follow-up：如何保证一个棋盘可以至少走一步
+????
+
+第五轮：
+给一个Double Linked List，例如：
+1<=>2<=>3<=>4<=>5. 
+再给一个List，存的是某些Node的指针，例如存的是1,3,4,5，要求找这些Node里有多少group，一个Group里的Node是连通的
+比如3,4,5是连通的，但是不和1直接连通，所以返回2个group
+我一开始以为是Union Find，结果发现Union Find更复杂，直接用dfs就行，不过要注意用HashSet的话会有问题
+然后同样要设计test case
+
+

@@ -1,0 +1,2 @@
+create k size heap store (node.val,node)
+everytime pop the min val and move that node to its next and push back to heap

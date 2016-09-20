@@ -51,6 +51,7 @@ class Solution(object):
             print("{},{}".format(i.start, i.end))
 
         ans = [intervals[0]]
+        #对区间集合按照 start 来排序，然后根据 intervals[i].start 和 res.lastElement.end 来整合即可。
         for i in range(0, len(intervals)):
             top = ans.pop()
             if top.end >= intervals[i].start:

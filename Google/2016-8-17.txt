@@ -1,0 +1,106 @@
+
+一个月前面的，第一家面的公司，HR说非常close但是还是挂了。求加点分。
+
+1. 设计一个class，可以实现往里面加interval和给一个value返回这个value在不在之前加的interval里。
+Simple Interval Tree
+
+class IntervalTreeNode(object):
+
+    def __init__(self, Interval):
+        self.interval = Interval
+        self.maxEnd = Interval.end
+        self.left = None
+        self.right = None
+
+
+class Interval(object):
+
+    def __init__(self, start, end):
+        self.start = start
+        self.end = end
+
+
+class IntervalTree(object):
+
+    def __init__(self):
+        self.root = None
+
+    def insertInterval(self, node, interval):
+        if not node:
+            return IntervalTreeNode(interval)
+
+        l = node.interval.start
+
+        if interval.start < l:
+            node.left = self.insertInterval(node.left)
+        else:
+            node.right = self.insertInterval(node.right)
+
+        if node.maxEnd < interval.high:
+            node.maxEnd = interval.high
+
+        return node
+
+    def searchValue(self, value, node):
+        if not node:
+            return False
+
+        if value > node.maxEnd:
+            return False
+
+        if value < node.interval.end:
+            return self.searchValue(node.left, value)
+        else:
+
+
+2. Game of life，要求每个cell查看少于8个周围cell的value，然后followup就是board无限大怎么处理。
+leetcode 289
+
+
+
+3. 一个房间，左下角是(0,0)右上角是(1,1)，给若干个sensor，每个censor有（x,y,r），r代表圆的半径，问有没有办法可以从左下走到右上不被任何censor探到。
+???
+
+
+4. 设计
+朋友的朋友，可以加朋友，然后查看两个人是不是朋友。讨论朋友的朋友也算朋友，然后要实现可以删除朋友。难点在于A和B可能不是直接朋友，但是可以是通过各种不同的人成为间接朋友，删除其中一条链接不一定两个人就不是朋友了。讨论很久最后写代码只有十分钟左右，没写完。
+????
+
+
+5. minimum substring containing only 2 unique characters, followup - k characters
+
+-Done
+class Solution(object):
+
+    def lengthOfLongestSubstringKDistinct(self, s, k):
+        if not s:
+            return 0
+        if k == 0:
+            return 0
+
+        maxlen = -float("inf")
+
+        hashset = {}
+
+        head = 0
+        tail = 0
+
+        while tail < len(s):
+            if s[tail] in hashset:
+                hashset[s[tail]] += 1
+                tail += 1
+            else:
+                while len(hashset) >= k:
+
+                    hashset[s[head]] -= 1
+                    if hashset[s[head]] == 0:
+                        del hashset[s[head]]
+                    head += 1
+
+                hashset[s[tail]] = 1
+                tail += 1
+
+            maxlen = max(maxlen, tail - head)
+
+        return maxlen
+leetcode  340

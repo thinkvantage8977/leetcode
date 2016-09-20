@@ -1,0 +1,130 @@
+刚刚面完onsite，发面经求RP
+第一轮：
+1. Given a sorted array with size N, values have range 0 ~ N. There must be a missing number. Find the missing number. Follow up: if more than one missing number, find the ith one.. 1point3acres.com/bbs
+
+int findFirstMissing(int array[], int start, int end) 
+    {
+        if (start > end)
+            return end + 1;
+
+        if (start != array[start])
+            return start;
+
+        int mid = (start + end) / 2;
+
+        if (array[mid] > mid)
+            return findFirstMissing(array, start, mid);
+        else
+            return findFirstMissing(array, mid + 1, end);
+    }
+
+
+2. Find median in data stream (the integers are 16 bits. You have to use this property.) (没写出来)
+
+	for i in stream:
+		indx[i]+=1
+		total +=1
+
+	median = total//2
+	for i in range(0,65536):
+
+
+
+
+第二轮:
+Given a string "hello", each cahracter can split the string into several pieces:
+h -> "", "ello"
+e -> "h", "llo"
+l -> "he", "", "o"
+o -> "hell", ""
+For all the split results, find one whose longest substring is shortest among all results, return the splitting character. (should return 'l' in this case)
+Follow up: optimize space complexity
+
+
+
+第三轮:
+Rearrange a string so that same characters cannot be consecutive. 
+Follow up: the distance between same character should be at least k. 
+Follow up: Based on previous follow up, return the smallest result among all possible results.
+
+# 在优先队列中存储以(数量+字符)的对, 以k为区间大小排列k个从数量高到低的字符, 
+# 然后再重复此过程, 这种贪心的策略可以保证让数量大的最优先排列, 
+# 并且使其间隔最小的距离, 否则到后来可能没有足够的空间.
+import heapq
+
+class Solution(object):
+
+    def rearrangeString(self, str, k):
+        if k == 0:
+            return str
+        heap = [(-f, c) for c, f in collections.Counter(str).items()]
+
+        heapq.heapify(heap)
+
+        l = len(str)
+        ans = []
+
+        while l > 0:
+            length = min(k, l)
+            temp = []
+            if len(heap) < length:
+                return ""
+            for i in range(0, length):
+                current = heapq.heappop(heap)
+                ans.append(current[1])
+                l -= 1
+                if current[0] + 1 != 0:
+                    temp.append((current[0] + 1, current[1]))
+
+            for i in temp:
+                heapq.heappush(heap, i)
+
+        return "".join(ans)
+
+第四轮:
+1. Given a lot of logs: log(startTime, endTime, memoryUse), return the peak memory usage.
+2. Longest substring that contains k distinct characters. Follow up: what if the input is a char stream.
+
+1-Meeting Room
+2.Window + dictionary
+
+
+补充内容 (2016-9-10 08:16):
+第三轮follow up 2 写错了，return the result which is most similar to the original string.不是smallest。。。记乱了
+
+
+
+
+
+自我介绍后就问了一个问题
+给一批人， 这些人每人都花了一笔钱，.
+让算， 谁给谁多少钱， 能让所有人都达到平均数
+
+
+public void calculate(int[] nums) {
+                int sum = 0;
+                for (int i : nums) {
+                        sum += i;
+                }.
+                double avg = sum * 1.0 / nums.length;
+                double[] temp = new double[nums.length];
+                for (int i = 0; i < nums.length; i++) {
+                        temp[i] = avg - nums[i];
+                }
+                int cur1 = 0; //pos
+                int cur2 = 0; //neg
+                while (cur1 < nums.length) {
+                        while (cur1 < nums.length && temp[cur1] <= 0) {
+                                cur1++;
+                        }
+                        while (cur2 < nums.length && temp[cur2] >= 0) {
+                                cur2++;
+                        }
+                        if (cur1 < nums.length && cur2 < nums.length) {
+                                double min = Math.min(temp[cur1], -temp[cur2]);
+                                System.out.println("" + cur2 + " gives " + (min) + " to " + cur1);
+                                temp[cur1] -= min;
+                                temp[cur2] += min;
+                        }
+                }
+        }

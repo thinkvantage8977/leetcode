@@ -1,0 +1,50 @@
+第一轮面试官是一个白人， 先上来一个问题是一串type为double的stream源源不断地流过来，给了window size， 问最近window size中所有数的平均。我的解法是用deque做的，空间复杂度O(n)，不知道有没有O(1)空间复杂度的解法。Follow up：经过很长一段时间之后，可能数据流中的平均值不再是正确的平均值了，请解释一下为什么，该如何解决这个问题。我回答是因为double不是精确的计数，可能产生误差，解决方法是过一定时间重新将整个deque中的所有数据重新求一下平均值.
+-DONE
+import collections
+
+class dqueueForGettingAverage(object):
+
+    def __init__(self, k):
+        self.deque = collections.deque()
+        self.sum = 0
+        self.counter = 0
+        self.k = k
+
+        self.precisionCounter = 0
+
+    def add(self, val):
+
+        if self.counter == self.k:
+            out = self.deque.pop()
+            self.sum -= out
+            self.deque.appendleft(val)
+            self.sum += val
+            self.precisionCounter += 2
+        else:
+            self.deque.appendleft(val)
+            self.counter += 1
+            self.sum += val
+            self.precisionCounter += 1
+
+    def average(self):
+
+        if self.precisionCounter > 1000:
+            self.sum = sum(self.deque)
+
+        return self.sum / float(self.counter)
+
+
+第二题给了一个matrix，每个matrix[i][j]有一个价格，给你一个budget，问如何求出最大面积的子矩阵，使得子矩阵的价格之和不超过budget。一开始我跟他简单讲述了一下O(n6)的brute force， 然后说可以建立一个sum数组优化到O(n4)，然后他说能继续优化么，我说用two pointer可以把时间复杂度优化到O(n3)。然后写code写了好久。我觉得可能是我code写的太慢了吧，因为经常写着写着就要停下来想一想。
+LC 363
+-DONE
+
+
+
+
+第二轮面试官国人，上来的的问题是问我如果在谷歌搜索框里输入一个查询语句，请描述一下在点击回车之后会发生什么事情。因为自己做过搜索引擎，我当时以为他问搜索引擎的查询过程，然后有点答得不对题，后来才知道他问的是计算机网络的东西。我大概把这个网络部分的回答简化了，然后没有答完整。要是理解清楚题意的话，我觉得我会把应用层到物理层的过程都给他讲一遍。（居然考计算机网络，我去）
+
+???
+
+第二个问题是说谷歌服务器每个上面都有自己的log，让我做一个log viewer服务器，自己定义接口，能够实现在log viewer查询所有的服务器端整合的log，（因为去一个个服务器上查询log可能太麻烦了）， 可以自己定义log viewer的功能。做完了后面试官说写的很好，然后跟我讨论了一下实现并发等，面试结束，然后就挂了。。。挂了。。。挂了。。。
+
+????

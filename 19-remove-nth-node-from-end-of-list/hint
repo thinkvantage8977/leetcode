@@ -1,0 +1,4 @@
+move the first node n step first
+then a new second node set to root
+first,second move together until first.next ==none
+second.next =second.next.next

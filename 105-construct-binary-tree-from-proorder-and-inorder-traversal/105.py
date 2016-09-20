@@ -1,4 +1,5 @@
 # Definition for a binary tree node.
+# 前序遍历第一个元素是根结点（k），在中序遍历序列中找值为k的下标idx，idx将中序遍历序列分成左右子树，对前序遍历序列也一样，可进行递归操作 
 class TreeNode(object):
 
     def __init__(self, x):

@@ -1,6 +1,6 @@
 import heapq
 
-
+#从0，0 开始进入HEAP，每次出MIN 然后宽展这个MIN的下和右进HEAP
 class Solution(object):
 
     def kthSmallest(self, matrix, k):
