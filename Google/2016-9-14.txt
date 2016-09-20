@@ -12,7 +12,4 @@ lc的304，从一维数组审计到二维数组，问我怎么generalize刚才�
 
 
 Raindrop problem:
-struct interv { double left=0, right=0.01; bool isWet() { return left>=right; } }; 就好了，然后生成0,1之间的一个均匀分布，模拟每个雨滴看落到哪个interval里，直 到100个都打湿。 vector sidewalk(100,interv()); int cnt=0, wetCnt=0, idx; while(wetCnt<100) { ++cnt; double p= (double)(rand())/RAND_MAX; double left=p-0.005; double right=p+0.005; if(left>=0) { idx=left/0.01; if(!sidewalk.isWet()) { iright=left-idx*0.01; if (irightsidewalk.left) { sidewalk.left=ileft; if(sidewalk.isWet()) ++wetCnt; } } } }
-
-链接: https://instant.1point3acres.com/thread/163169
-来源: 一亩三分地
+struct interv { double left=0, right=0.01; bool isWet() { return left>=right; } }; 就好了，然后生成0,1之间的一个均匀分布，模拟每个雨滴看落到哪个interval里，直 到100个都打湿。 v

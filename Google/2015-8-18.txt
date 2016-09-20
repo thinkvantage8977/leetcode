@@ -37,6 +37,7 @@ class dqueueForGettingAverage(object):
 第二题给了一个matrix，每个matrix[i][j]有一个价格，给你一个budget，问如何求出最大面积的子矩阵，使得子矩阵的价格之和不超过budget。一开始我跟他简单讲述了一下O(n6)的brute force， 然后说可以建立一个sum数组优化到O(n4)，然后他说能继续优化么，我说用two pointer可以把时间复杂度优化到O(n3)。然后写code写了好久。我觉得可能是我code写的太慢了吧，因为经常写着写着就要停下来想一想。
 LC 363
 -DONE
+-Very hard
 
 
 

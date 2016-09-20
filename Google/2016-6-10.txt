@@ -1,0 +1,27 @@
+
+实习转正面试一共两轮。
+第一轮，先聊了很久的排序算法，都是基础的排序算法。.
+
+接着写了一个编程题目：有一个数组，首先排好序，然后将其顺序打乱，打乱的规则比较特殊，每一个元素都只能最多向左或者向右移k个位置。也就是说，本来处于第 i 个位置的元素，打乱之后只能处于 i-k 和 i+k 之间任意一个位置。写代码将这个数组排序。
+
+第一题heap sort + sliding window做可以吧？复杂度O(nlogk)，代码大概这样，欢迎交流指正：
+private void heapSort(int[] a, int k) { //我首先假定数组和k值都是valid的
+    Queue<Integer> heap = new PriorityQueue<>(); //用一个k+1大小的最小堆维护sliding window.1point3acres缃�
+    for (int i = 0; i <= k; i++) { //初始化
+        heap.offer(a[i]);. 1point 3acres 璁哄潧
+    }
+    for (int i = k + 1; i < a.length; i++) { //移动sliding window，每次把最小值放在数组相应位置
+        a[i - (k + 1)] = heap.poll();
+        heap.offer(a[i]);
+    }
+    for (int i = 0; i <= k; i++) { //将最后剩的k+1个元素放在数组最后面
+        a[n - (k + 1) + i] = heap.poll();
+    }
+-Done
+
+第二轮，先聊了一个设计题目：如何设计一个爬虫。
+
+设计合理即可，实现思路：使用bfs算法进行网站爬取；使用master节点作为控制节点控制work 节点进行网站爬取；使用分布式队列做任务调度；使用key-value存储（如redis)做网页判重
+
+
+接着做题：有一个字符串，找到里面最长的子串，使得子串最多包含两个不同的字符。
